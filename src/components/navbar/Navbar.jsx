@@ -16,9 +16,15 @@ const Navbar = () => {
       <div className={styles.logo}>Verdant</div>
       <div className={styles.links}>
         <Theme />
-        <Link href="/">Homepage</Link>
-        <Link href="/">Contact</Link>
-        <Link href="/">About</Link>
+        <Link href="/" rel="preload" as="style">
+          Homepage
+        </Link>
+        <Link href="/" rel="preload" as="style">
+          Contact
+        </Link>
+        <Link href="/" rel="preload" as="style">
+          About
+        </Link>
         <Auth />
       </div>
     </div>
