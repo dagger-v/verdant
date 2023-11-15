@@ -1,3 +1,26 @@
 .container {
-  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+}
+
+.social {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+}
+
+.logo {
+  flex: 1;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.links {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+  font-size: 1.2rem;
 }
