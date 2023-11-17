@@ -16,13 +16,13 @@ const Navbar = () => {
       <div className={styles.logo}>Verdant</div>
       <div className={styles.links}>
         <Theme />
-        <Link href="/" rel="preload" as="style">
+        <Link href="/" className={styles.link}>
           Homepage
         </Link>
-        <Link href="/" rel="preload" as="style">
+        <Link href="/" className={styles.link}>
           Contact
         </Link>
-        <Link href="/" rel="preload" as="style">
+        <Link href="/" className={styles.link}>
           About
         </Link>
         <Auth />
