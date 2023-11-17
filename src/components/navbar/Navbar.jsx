@@ -1,8 +1,8 @@
 import styles from "./navbar.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import Auth from "../auth/Auth";
-import Theme from "../theme/Theme";
+import AuthLinks from "../authLinks/AuthLinks";
+import ThemeToggle from "../themeToggle/themeToggle";
 
 const Navbar = () => {
   return (
@@ -15,7 +15,7 @@ const Navbar = () => {
       </div>
       <div className={styles.logo}>Verdant</div>
       <div className={styles.links}>
-        <Theme />
+        <ThemeToggle />
         <Link href="/" className={styles.link}>
           Homepage
         </Link>
@@ -25,7 +25,7 @@ const Navbar = () => {
         <Link href="/" className={styles.link}>
           About
         </Link>
-        <Auth />
+        <AuthLinks />
       </div>
     </div>
   );

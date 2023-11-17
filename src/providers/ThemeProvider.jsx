@@ -12,8 +12,8 @@ const ThemeProvider = ({ children }) => {
   }, []);
 
   if (mounted) {
+    return <div className={theme}>{children}</div>;
   }
-  return <div className={theme}>{children}</div>;
 };
 
 export default ThemeProvider;
