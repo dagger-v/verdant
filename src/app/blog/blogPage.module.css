@@ -1,13 +1,11 @@
-.title{
+.title {
   background-color: coral;
-  color: white;
+  color: #fff;
   padding: 5px 10px;
   text-align: center;
-  text-transform: capitalize;
 }
 
-.content{
+.content {
   display: flex;
   gap: 50px;
 }
-

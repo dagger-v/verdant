@@ -10,7 +10,7 @@
 .write {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 30px;
 }
 
@@ -21,19 +21,19 @@
 
 .button {
   padding: 16px 20px;
-  background-color: teal;
-  color: white;
+  background-color: #7071e8;
+  color: #fff;
   font-weight: bold;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.comments{
+.comments {
   margin-top: 50px;
 }
 
-.comment{
+.comment {
   margin-bottom: 50px;
 }
 
@@ -60,11 +60,11 @@
   font-weight: 500;
 }
 
-.date{
-  font-size: 14px;
+.dat {
+  font-size: 0.8rem;
 }
 
-.desc{
-  font-size: 18px;
+.desc {
+  font-size: 1.2rem;
   font-weight: 300;
 }

@@ -1,16 +1,3 @@
-.container{
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.select{
-  margin-bottom: 50px;
-  padding: 10px 20px;
-  margin-left: 50px;
-  width: max-content;
-}
-
 .editor {
   display: flex;
   gap: 20px;
@@ -45,16 +32,15 @@
   left: 50px;
 }
 
-.input{
+.input {
   padding: 50px;
-  font-size: 64px;
+  font-size: 3rem;
   border: none;
   outline: none;
   background-color: transparent;
-  color: var(--textColor);
 }
 
-.input::placeholder{
+.input::placeholder {
   color: #b3b3b1;
 }
 
@@ -62,14 +48,14 @@
   width: 100%;
 }
 
-.publish{
+.publish {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 30px;
+  right: 20px;
   padding: 10px 20px;
   border: none;
-  background-color: #1a8917;
-  color: white;
+  background-color: #ed5ab3;
+  color: #fff;
   cursor: pointer;
   border-radius: 20px;
 }
