@@ -2,20 +2,66 @@
 
 import Image from "next/image";
 import styles from "./writePage.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { app } from "@/utils/firebase";
+
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+
+const storage = getStorage(app);
 
 const WritePage = () => {
+  const { status } = useSession();
+  const router = useRouter();
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [file, setFile] = useState(null);
+  const [media, setMedia] = useState("");
+  const [title, setTitle] = useState("");
+  const [catSlug, setCatSlug] = useState("");
 
-  const { status } = useSession();
+  useEffect(() => {
+    const upload = () => {
+      const name = new Date().getTime + file.name;
 
-  const router = useRouter();
+      const storageRef = ref(storage, name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {},
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setMedia(downloadURL);
+          });
+        }
+      );
+    };
+
+    file && upload();
+  }, []);
 
   if (status === "loading") {
     return <div className={styles.loading}>Loading...</div>;
@@ -25,9 +71,51 @@ const WritePage = () => {
     router.push("/");
   }
 
+  const slugify = (str) =>
+    str
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+  const handleSubmit = async () => {
+    const res = await fetch("/api/posts", {
+      method: "POST",
+      body: JSON.stringify({
+        title,
+        desc: value,
+        img: media,
+        slug: slugify(title),
+        catSlug: catSlug || "general",
+      }),
+    });
+
+    if (res.status === 200) {
+      const data = await res.json();
+      router.push(`/posts/${data.slug}`);
+    }
+  };
+
   return (
     <div className={styles.container}>
-      <input type="text" placeholder="Title" className={styles.input} />
+      <input
+        type="text"
+        placeholder="Title"
+        className={styles.input}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <select
+        className={styles.select}
+        onChange={(e) => setCatSlug(e.target.value)}
+      >
+        <option value="general">general</option>
+        <option value="games">video games</option>
+        <option value="programming">programming</option>
+        <option value="anime">anime</option>
+        <option value="manga">manga</option>
+        <option value="comics">comics</option>
+      </select>
       <div className={styles.editor}>
         <button className={styles.button} onClick={() => setOpen(!open)}>
           <Image src="/plus.png" alt="" width={16} height={16} />
@@ -61,7 +149,9 @@ const WritePage = () => {
           placeholder="Tell your story"
         />
       </div>
-      <button className={styles.publish}>Publish</button>
+      <button className={styles.publish} onClick={handleSubmit}>
+        Publish
+      </button>
     </div>
   );
 };
